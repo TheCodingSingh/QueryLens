@@ -40,7 +40,7 @@ def load_database(uploaded_file) -> Optional[sqlite3.Connection]:
         return None
 
     # Save uploaded file temporarily
-    with open("temp_db.sqlite", "wb") as f:
+    with open("temp.sqlite", "wb") as f:
         f.write(uploaded_file.getbuffer())
 
     # Connect to the database
