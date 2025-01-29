@@ -1,6 +1,6 @@
 <div align="center">
 
-![Banner](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=NLP2SQL&fontSize=80&animation=fadeIn&fontAlignY=35)
+![Banner](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=QueryLens&fontSize=80&animation=fadeIn&fontAlignY=35)
 
 </div>
 
@@ -85,8 +85,8 @@ graph LR
 1️⃣ **Clone the Repository**
 
 ```bash
-git clone https://github.com/lohitkolluri/NLP2SQLL.git
-cd NLP2SQL
+git clone https://github.com/TheCodingSingh/QueryLens.git
+cd QueryLens
 ```
 
 2️⃣ **Set Up Environment**
@@ -110,7 +110,7 @@ pip install -r requirements.txt
 4️⃣ **Launch the App**
 
 ```bash
-streamlit run app/NLP2SQL.py
+streamlit run app/QueryLens.py
 ```
 
 ## 🎨 Built With
@@ -131,7 +131,7 @@ streamlit run app/NLP2SQL.py
 
 ```mermaid
 mindmap
-  root((NLP2SQL))
+  root((QueryLens))
     Query Processing
       Natural Language Input
       Decision Logging
@@ -189,7 +189,7 @@ mindmap
 </div>
 <div align="center">
 
-License © [QueryLens](LICENSE)
+License © [Lohit Kolluri](LICENSE)
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer" width="100%"/>
 
