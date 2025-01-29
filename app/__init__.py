@@ -1,3 +1,3 @@
-from .QueryLens import main t
+from .QueryLens import main
 
 __all__ = ['main']

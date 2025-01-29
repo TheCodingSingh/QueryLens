@@ -475,9 +475,9 @@ def handle_query_response(response: dict, db_name: str, db_type: str, host: Opti
         colored_header("SQL Query and Summary", color_name="blue-70", description="")
         st.code(query, language="sql")
 
-        if decision_log:
-            with st.expander("Decision Log", expanded=False):
-                st.markdown(build_markdown_decision_log(decision_log))
+        # if decision_log:
+        #     with st.expander("Decision Log", expanded=False):
+        #         st.markdown(build_markdown_decision_log(decision_log))
 
         sql_results = get_data(query, db_name, db_type, host, user, password)
 
@@ -504,60 +504,60 @@ def handle_query_response(response: dict, db_name: str, db_type: str, host: Opti
         filtered_results = dataframe_explorer(sql_results, case=False)
         st.dataframe(filtered_results, use_container_width=True, height=600)
 
-        colored_header("Summary Statistics and Export Options", color_name="blue-70", description="")
-        display_summary_statistics(filtered_results)
+        # colored_header("Summary Statistics and Export Options", color_name="blue-70", description="")
+        # display_summary_statistics(filtered_results)
 
-        if len(filtered_results.columns) >= 2:
-            with st.sidebar.expander("📊 Visualization Options", expanded=True):
-                numerical_cols = filtered_results.select_dtypes(include=[np.number]).columns.tolist()
-                categorical_cols = filtered_results.select_dtypes(include=['object', 'category']).columns.tolist()
+        # if len(filtered_results.columns) >= 2:
+        #     with st.sidebar.expander("📊 Visualization Options", expanded=True):
+        #         numerical_cols = filtered_results.select_dtypes(include=[np.number]).columns.tolist()
+        #         categorical_cols = filtered_results.select_dtypes(include=['object', 'category']).columns.tolist()
 
-                suggested_x, suggested_y = None, None
-                if numerical_cols:
-                    suggested_x = numerical_cols[0]
-                    suggested_y = numerical_cols[1] if len(numerical_cols) > 1 else (categorical_cols[0] if categorical_cols else None)
-                elif categorical_cols:
-                    suggested_x = categorical_cols[0]
-                    suggested_y = categorical_cols[1] if len(categorical_cols) > 1 else None
+        #         suggested_x, suggested_y = None, None
+        #         if numerical_cols:
+        #             suggested_x = numerical_cols[0]
+        #             suggested_y = numerical_cols[1] if len(numerical_cols) > 1 else (categorical_cols[0] if categorical_cols else None)
+        #         elif categorical_cols:
+        #             suggested_x = categorical_cols[0]
+        #             suggested_y = categorical_cols[1] if len(categorical_cols) > 1 else None
 
-                if not suggested_x:
-                    suggested_x = filtered_results.columns[0] if not filtered_results.columns.empty else 'Column1'
-                if not suggested_y:
-                    suggested_y = filtered_results.columns[1] if len(filtered_results.columns) > 1 else (filtered_results.columns[0] if not filtered_results.columns.empty else 'Column2')
+        #         if not suggested_x:
+        #             suggested_x = filtered_results.columns[0] if not filtered_results.columns.empty else 'Column1'
+        #         if not suggested_y:
+        #             suggested_y = filtered_results.columns[1] if len(filtered_results.columns) > 1 else (filtered_results.columns[0] if not filtered_results.columns.empty else 'Column2')
 
-                x_options = [f"{col} ⭐" if col == suggested_x else col for col in filtered_results.columns]
-                y_options = [f"{col} ⭐" if col == suggested_y else col for col in filtered_results.columns]
+        #         x_options = [f"{col} ⭐" if col == suggested_x else col for col in filtered_results.columns]
+        #         y_options = [f"{col} ⭐" if col == suggested_y else col for col in filtered_results.columns]
 
-                x_col = st.selectbox("Select X-axis Column", options=x_options, index=x_options.index(f"{suggested_x} ⭐") if f"{suggested_x} ⭐" in x_options else 0, key="x_axis")
-                y_col = st.selectbox("Select Y-axis Column", options=y_options, index=y_options.index(f"{suggested_y} ⭐") if f"{suggested_y} ⭐" in y_options else 0, key="y_axis")
+        #         x_col = st.selectbox("Select X-axis Column", options=x_options, index=x_options.index(f"{suggested_x} ⭐") if f"{suggested_x} ⭐" in x_options else 0, key="x_axis")
+        #         y_col = st.selectbox("Select Y-axis Column", options=y_options, index=y_options.index(f"{suggested_y} ⭐") if f"{suggested_y} ⭐" in y_options else 0, key="y_axis")
 
-                x_col_clean = x_col.replace(" ⭐", "")
-                y_col_clean = y_col.replace(" ⭐", "")
+        #         x_col_clean = x_col.replace(" ⭐", "")
+        #         y_col_clean = y_col.replace(" ⭐", "")
 
-                chart_type_options = ["None", "Bar Chart", "Line Chart", "Scatter Plot", "Area Chart", "Histogram"]
-                suggested_chart_type = visualization_recommendation if visualization_recommendation in chart_type_options else ("Bar Chart" if numerical_cols else "None")
-                chart_type_display = [f"{chart} ⭐" if chart == suggested_chart_type else chart for chart in chart_type_options]
+        #         chart_type_options = ["None", "Bar Chart", "Line Chart", "Scatter Plot", "Area Chart", "Histogram"]
+        #         suggested_chart_type = visualization_recommendation if visualization_recommendation in chart_type_options else ("Bar Chart" if numerical_cols else "None")
+        #         chart_type_display = [f"{chart} ⭐" if chart == suggested_chart_type else chart for chart in chart_type_options]
 
-                try:
-                    default_chart_index = chart_type_display.index(f"{suggested_chart_type} ⭐")
-                except ValueError:
-                    default_chart_index = 0
+        #         try:
+        #             default_chart_index = chart_type_display.index(f"{suggested_chart_type} ⭐")
+        #         except ValueError:
+        #             default_chart_index = 0
 
-                chart_type = st.selectbox(
-                    "Select Chart Type",
-                    options=chart_type_display,
-                    index=default_chart_index,
-                    help=f"Recommended Chart Type: {suggested_chart_type}",
-                    key="chart_type"
-                )
+        #         chart_type = st.selectbox(
+        #             "Select Chart Type",
+        #             options=chart_type_display,
+        #             index=default_chart_index,
+        #             help=f"Recommended Chart Type: {suggested_chart_type}",
+        #             key="chart_type"
+        #         )
 
-                chart_type_clean = chart_type.replace(" ⭐", "")
+        #         chart_type_clean = chart_type.replace(" ⭐", "")
 
-            if chart_type_clean != "None" and x_col_clean and y_col_clean:
-                chart = create_chart(filtered_results, chart_type_clean, x_col_clean, y_col_clean)
-                if chart:
-                    with chart_container(data=filtered_results):
-                        st.altair_chart(chart, use_container_width=True)
+        #     if chart_type_clean != "None" and x_col_clean and y_col_clean:
+        #         chart = create_chart(filtered_results, chart_type_clean, x_col_clean, y_col_clean)
+        #         if chart:
+        #             with chart_container(data=filtered_results):
+        #                 st.altair_chart(chart, use_container_width=True)
 
         export_format = st.selectbox("Select Export Format", options=["CSV", "Excel", "JSON"], key="export_format")
         export_results(filtered_results, export_format)
